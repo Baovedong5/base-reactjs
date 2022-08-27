@@ -1,4 +1,5 @@
 import React from "react";
+import "./Displayinfor.scss";
 
 class DisplayInfor extends React.Component {
   state = {
@@ -16,7 +17,7 @@ class DisplayInfor extends React.Component {
     const { listUsers } = this.props;
     console.log(listUsers);
     return (
-      <div>
+      <div className="display-info-container">
         <div>
           <span
             onClick={() => {
