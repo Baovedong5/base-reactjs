@@ -23,12 +23,15 @@ class MyComponet extends React.Component {
   //JSX
   render() {
     return (
-      <div>
-        <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
-        <br />
-        <br />
-        <DisplayInfor listUsers={this.state.listUsers} />
-      </div>
+      <>
+        <div className="a">
+          <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+          <br />
+          <br />
+          <DisplayInfor listUsers={this.state.listUsers} />
+        </div>
+        <div className="b"></div>
+      </>
     );
   }
 }

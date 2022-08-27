@@ -1,6 +1,6 @@
 import React from "react";
 import "./Displayinfor.scss";
-import logo1 from './../logo.svg'
+import logo1 from "./../logo.svg";
 
 class DisplayInfor extends React.Component {
   state = {
@@ -19,7 +19,7 @@ class DisplayInfor extends React.Component {
     console.log(listUsers);
     return (
       <div className="display-info-container">
-        <img src={logo1}/>
+        <img src={logo1} />
         <div>
           <span
             onClick={() => {
@@ -32,7 +32,7 @@ class DisplayInfor extends React.Component {
           </span>
         </div>
         {this.state.isShowLitsUser && (
-          <div>
+          <>
             {listUsers.map((user) => {
               return (
                 <div key={user.id} className={+user.age > 18 ? "green" : "red"}>
@@ -42,7 +42,7 @@ class DisplayInfor extends React.Component {
                 </div>
               );
             })}
-          </div>
+          </>
         )}
         {/* <div>My name is {name}</div>
         <div>My age is {age}</div>
