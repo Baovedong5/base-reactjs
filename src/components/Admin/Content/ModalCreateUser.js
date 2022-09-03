@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
-const ModalCreateUser = () => {
-  const [show, setShow] = useState(false);
+import axios from "axios";
+const ModalCreateUser = (props) => {
+  const { show, setShow } = props;
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setemail("");
+    setpassword("");
+    setusername("");
+    setrole("USER");
+    setimage("");
+    setPreviewImage("");
+  };
 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -22,11 +30,37 @@ const ModalCreateUser = () => {
     }
   };
 
+  const handleSubmitCreateUser = async () => {
+    //validate
+
+    //call APIS
+    // let data = {
+    //   email: email,
+    //   password: password,
+    //   username: username,
+    //   role: role,
+    //   userImage: image,
+    // };
+
+    const data = new FormData();
+    data.append("email", email);
+    data.append("password", password);
+    data.append("username", username);
+    data.append("role", role);
+    data.append("userImage", image);
+
+    let res = await axios.post(
+      "http://localhost:8081/api/v1/participant",
+      data
+    );
+    console.log(">>>check call api", res);
+  };
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button>
+      </Button> */}
 
       <Modal
         show={show}
@@ -87,7 +121,7 @@ const ModalCreateUser = () => {
                 type="file"
                 hidden
                 id="labelUpload"
-                onChange={(event) => handleUploadImage()}
+                onChange={(event) => handleUploadImage(event)}
               />
             </div>
             <div className="col-md-12 img-preview">
@@ -103,7 +137,7 @@ const ModalCreateUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
             Save
           </Button>
         </Modal.Footer>
