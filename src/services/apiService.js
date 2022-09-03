@@ -40,4 +40,8 @@ instance.interceptors.response.use(
   }
 );
 
-export { postCreateNewUser };
+const getAllUsers = () => {
+  return axios.get("api/v1/participant/all");
+};
+
+export { postCreateNewUser, getAllUsers };
