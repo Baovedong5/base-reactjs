@@ -5,11 +5,13 @@ import { useState } from "react";
 import TableUser from "./TableUser";
 import { useEffect } from "react";
 import { getAllUsers } from "../../../services/apiService";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const ManagerUser = (props) => {
   const [showModalCreateUser, setshowModalCreateUser] = useState(false);
-
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
   const [listUsers, setListUsers] = useState([]);
+  const [dataUpdate, setDataUpdate] = useState({});
 
   useEffect(() => {
     fetchListUsers();
@@ -20,6 +22,11 @@ const ManagerUser = (props) => {
     if (res.EC === 0) {
       setListUsers(res.DT);
     }
+  };
+
+  const handleClickBtnUpdate = (user) => {
+    setShowModalUpdateUser(true);
+    setDataUpdate(user);
   };
 
   return (
@@ -37,12 +44,20 @@ const ManagerUser = (props) => {
           </button>
         </div>
         <div className="table-users-container">
-          <TableUser listUsers={listUsers} />
+          <TableUser
+            listUsers={listUsers}
+            handleClickBtnUpdate={handleClickBtnUpdate}
+          />
         </div>
         <ModalCreateUser
           show={showModalCreateUser}
           setShow={setshowModalCreateUser}
           fetchListUsers={fetchListUsers}
+        />
+        <ModalUpdateUser
+          show={showModalUpdateUser}
+          setShow={setShowModalUpdateUser}
+          dataUpdate={dataUpdate}
         />
       </div>
     </div>
