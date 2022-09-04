@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { postCreateNewUser } from "../../../services/apiService";
+import { putUpdateUser } from "../../../services/apiService";
 
 const ModalUpdateUser = (props) => {
   const { show, setShow, dataUpdate } = props;
@@ -18,6 +18,7 @@ const ModalUpdateUser = (props) => {
     setrole("USER");
     setimage("");
     setPreviewImage("");
+    props.resetUpdateData();
   };
 
   const [email, setemail] = useState("");
@@ -33,9 +34,9 @@ const ModalUpdateUser = (props) => {
       setemail(dataUpdate.email);
       setusername(dataUpdate.username);
       setrole(dataUpdate.role);
-      setimage("");
-      setPreviewImage("");
-      console.log(">>> check dataupdate: ", dataUpdate);
+      if (dataUpdate.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      }
     }
   }, [dataUpdate]);
 
@@ -62,14 +63,8 @@ const ModalUpdateUser = (props) => {
       return;
     }
 
-    if (!password) {
-      toast.error("invalid password");
-      return;
-    }
-
     //call APIS
-    let data = await postCreateNewUser(email, password, username, role, image);
-    console.log("component res: ", data);
+    let data = await putUpdateUser(dataUpdate.id, username, role, image);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
@@ -104,6 +99,7 @@ const ModalUpdateUser = (props) => {
                 type="email"
                 className="form-control"
                 value={email}
+                disabled={true}
                 onChange={(event) => setemail(event.target.value)}
               />
             </div>
@@ -113,6 +109,7 @@ const ModalUpdateUser = (props) => {
                 type="password"
                 className="form-control"
                 value={password}
+                disabled={true}
                 onChange={(event) => setpassword(event.target.value)}
               />
             </div>
@@ -130,10 +127,9 @@ const ModalUpdateUser = (props) => {
               <select
                 className="form-select"
                 onChange={(event) => setrole(event.target.value)}
+                value={role}
               >
-                <option selected value="USER">
-                  USER
-                </option>
+                <option value="USER">USER</option>
                 <option value="ADMIN">ADMIN</option>
               </select>
             </div>
