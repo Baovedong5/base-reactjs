@@ -117,9 +117,7 @@ const ModalCreateUser = (props) => {
                 className="form-select"
                 onChange={(event) => setrole(event.target.value)}
               >
-                <option selected value="USER">
-                  USER
-                </option>
+                <option value="USER">USER</option>
                 <option value="ADMIN">ADMIN</option>
               </select>
             </div>
