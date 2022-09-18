@@ -39,7 +39,6 @@ const Login = (props) => {
     let data = await postLogin(email, password);
     if (data && data.EC === 0) {
       dispatch(doLogin(data));
-      toast.success(data.EM);
       setIsLoading(false);
       navigate("/");
     }
