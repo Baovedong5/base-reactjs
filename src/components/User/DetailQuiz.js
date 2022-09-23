@@ -38,12 +38,9 @@ const DetailQuiz = (props) => {
           return { questionId: key, answers, questionDescription, image };
         })
         .value();
-      console.log(data);
       setDataQuiz(data);
     }
   };
-
-  console.log(">>> check data quiz: ", dataQuiz);
 
   const handlePrev = () => {
     if (index - 1 < 0) return;
@@ -78,6 +75,34 @@ const DetailQuiz = (props) => {
     }
   };
 
+  const handleFinishQuiz = () => {
+    console.log(">>>check data before submit: ", dataQuiz);
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answers = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((question) => {
+        let questionId = question.questionId;
+        let userAnswerId = [];
+
+        question.answers.forEach((a) => {
+          if (a.isSelected === true) {
+            userAnswerId.push(a.id);
+          }
+        });
+        answers.push({
+          questionId: +questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+
+      payload.answers = answers;
+      console.log("final payload: ", payload);
+    }
+  };
+
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -102,7 +127,10 @@ const DetailQuiz = (props) => {
           <button className="btn btn-primary" onClick={() => handleNext()}>
             Next
           </button>
-          <button className="btn btn-warning" onClick={() => handleNext()}>
+          <button
+            className="btn btn-warning"
+            onClick={() => handleFinishQuiz()}
+          >
             Finish
           </button>
         </div>
