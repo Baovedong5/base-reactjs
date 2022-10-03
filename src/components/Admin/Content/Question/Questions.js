@@ -30,10 +30,10 @@ const Questions = (props) => {
         <div className="mt-3">Add questions:</div>
         <div>
           <div className="question-content">
-            <div class="form-floating description">
+            <div className="form-floating description">
               <input
                 type="type"
-                class="form-control"
+                className="form-control"
                 placeholder="name@example.com"
               />
               <label>Description</label>
@@ -54,10 +54,10 @@ const Questions = (props) => {
           </div>
           <div className="answer-content">
             <input className="form-check-input iscorrect" type="checkbox" />
-            <div class="form-floating answer-name">
+            <div className="form-floating answer-name">
               <input
                 type="type"
-                class="form-control"
+                className="form-control"
                 placeholder="name@example.com"
               />
               <label>Answers 1</label>
