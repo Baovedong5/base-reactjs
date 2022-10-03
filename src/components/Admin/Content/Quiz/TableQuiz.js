@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAllQuizForAdmin } from "../../../../services/apiService";
+import ModalDeleteQuiz from "./ModalDeleteQuiz";
 
 const TableQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
+
+  const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
 
   useEffect(() => {
     fetchQuiz();
@@ -41,13 +44,22 @@ const TableQuiz = (props) => {
                   <td>{item.difficulty}</td>
                   <td style={{ display: "flex", gap: "15px" }}>
                     <button className="btn btn-warning">Edit</button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      // onClick={() =>}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
             })}
         </tbody>
       </table>
+      <ModalDeleteQuiz
+        show={showModalDeleteQuiz}
+        setShow={setShowModalDeleteQuiz}
+      />
     </>
   );
 };
